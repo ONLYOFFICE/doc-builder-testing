@@ -3,6 +3,7 @@
 # Test data for autotest
 module TestData
   # CDE number formats (7.4.0)
+  # @return [Array<String (frozen)>]
   def self.number_formats
     ['General',
      '0.00',
@@ -15,6 +16,12 @@ module TestData
      '0%',
      '# ?/?',
      '0.00E+00'].freeze
+  end
+
+  # CDE fill types
+  # @return [Array<String (frozen)>]
+  def self.fill_types
+    %w[blipFill solid gradFill noFill pattFill gradFill]
   end
 
   # @return [Array<String (frozen)>]
