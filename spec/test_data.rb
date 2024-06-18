@@ -36,4 +36,14 @@ module TestData
        UnicodeConverter.dll
        XpsFile.dll]
   end
+
+  # CSE layout color schemes (8.1)
+  def self.worksheet_themes_color
+    ['Aspect', 'Blue Green', 'Blue II', 'Blue Warm',
+     'Blue', 'Grayscale', 'Green Yellow', 'Green',
+     'Marquee', 'Median', 'Office 2007 - 2010', 'Office 2013 - 2022',
+     'Office', 'Orange Red', 'Orange', 'Paper',
+     'Red Orange', 'Red Violet', 'Red', 'Slipstream',
+     'Violet II', 'Violet', 'Yellow Orange', 'Yellow'].freeze
+  end
 end
