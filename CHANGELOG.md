@@ -34,3 +34,4 @@
 ### Fixes
 
 * Fix centos 8 dockerfile
+* Add missing `file` dependency for RockyLinux
