@@ -3,6 +3,7 @@
 # Test data for autotest
 module TestData
   # CDE number formats (7.4.0)
+  # @return [Array<String (frozen)>]
   def self.number_formats
     ['General',
      '0.00',
@@ -15,6 +16,17 @@ module TestData
      '0%',
      '# ?/?',
      '0.00E+00'].freeze
+  end
+
+  # CDE fill types
+  # @return [Array<String (frozen)>]
+  def self.fill_types
+    %w[blipFill
+       solid
+       gradFill
+       noFill
+       pattFill
+       gradFill]
   end
 
   # @return [Array<String (frozen)>]
@@ -35,5 +47,58 @@ module TestData
        PdfFile.dll
        UnicodeConverter.dll
        XpsFile.dll]
+  end
+
+  # Default style list in the CDE
+  def self.default_styles
+    ['Normal',
+     'No Spacing',
+     'Heading 1',
+     'Heading 2',
+     'Heading 3',
+     'Heading 4',
+     'Heading 5',
+     'Heading 6',
+     'Heading 7',
+     'Heading 8',
+     'Heading 9',
+     'Title',
+     'Subtitle',
+     'Quote',
+     'Intense Quote',
+     'List Paragraph',
+     'Caption',
+     'Header',
+     'Footer',
+     'Footnote text',
+     'Endnote text'].freeze
+  end
+
+  # CSE layout color schemes (8.1)
+  def self.worksheet_themes_color
+    ['Aspect',
+     'Blue Green',
+     'Blue II',
+     'Blue Warm',
+     'Blue',
+     'Grayscale',
+     'Green Yellow',
+     'Green',
+     'Marquee',
+     'Median',
+     'Office 2007 - 2010',
+     'Office 2013 - 2022',
+     'Office',
+     'Orange Red',
+     'Orange',
+     'Paper',
+     'Red Orange',
+     'Red Violet',
+     'Red',
+     'Slipstream',
+     'Violet II',
+     'Violet',
+     'Yellow Orange',
+     'Yellow'].freeze
   end
 end

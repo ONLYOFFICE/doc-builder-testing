@@ -180,4 +180,87 @@ describe 'ApiTable section tests' do
     docx = builder.build_and_parse('js/docx/smoke/api_table/set_width.js')
     expect(docx.elements[1].properties.table_width).to eq(OoxmlParser::OoxmlSize.new(100, :percent))
   end
+
+  it 'ApiTable | ToJSON method' do
+    docx = builder.build_and_parse('js/docx/smoke/api_table/to_json.js')
+    json = JSON.parse(docx.elements[0].nonempty_runs[0].text)
+    expect(json['type']).to eq('table')
+    expect(docx.elements[1].properties.table_style.name).to eq(json['styles']['95']['name'])
+  end
+
+  describe 'ApiTable | AddCaption method' do
+    let(:docx) { builder.build_and_parse('js/docx/smoke/api_table/add_caption.js') }
+
+    def check_style(element)
+      expect(element.font_color.to_s).to eq('RGB (14, 40, 65)')
+      expect(element.size).to eq(9.0)
+      expect(element.position).to eq(0.0)
+    end
+
+    def check_caption(element, text_arr)
+      element.nonempty_runs.each_with_index do |item, index|
+        expect(item.text).to eq(text_arr[index])
+        check_style(item)
+      end
+    end
+
+    it 'Check document structure' do
+      expect(docx.elements.size).to eq(19)
+    end
+
+    it 'Check AddCaption without parameters' do
+      expect(docx.elements[4].class).to eq(OoxmlParser::Table)
+
+      caption = docx.elements[5]
+      expect(caption.nonempty_runs.size).to eq(2)
+      check_caption(caption, ['Table ', '1'])
+    end
+
+    it 'Check AddCaption with additional text' do
+      expect(docx.elements[7].class).to eq(OoxmlParser::Table)
+
+      caption = docx.elements[8]
+      expect(caption.nonempty_runs.size).to eq(4)
+      check_caption(caption, ['Figure ', '.', '1', ' caption text '])
+    end
+
+    it 'Check AddCaption with bExludeLabel: true and nHeadingLvl: 1' do
+      expect(docx.elements[10].class).to eq(OoxmlParser::Table)
+
+      caption = docx.elements[11]
+      expect(caption.nonempty_runs.size).to eq(4)
+      # TODO: 'check after release'
+      if builder.version >= 'v8.2'
+        check_caption(caption, ['1', ':', 'B', ' caption text '])
+      else
+        check_caption(caption, ['1', ':', '2', ' caption text '])
+      end
+    end
+
+    it 'Check AddCaption with bBefore: true and nHeadingLvl: 2' do
+      expect(docx.elements[14].class).to eq(OoxmlParser::Table)
+
+      caption = docx.elements[13]
+      expect(caption.nonempty_runs.size).to eq(4)
+      # TODO: 'check after release'
+      if builder.version >= 'v8.2'
+        check_caption(caption, ['Equation ', '1.1', '-', 'a'])
+      else
+        check_caption(caption, ['Equation ', '1.1', '-', '1'])
+      end
+    end
+
+    it 'Check AddCaption with nHeadingLvl: 3' do
+      expect(docx.elements[16].class).to eq(OoxmlParser::Table)
+
+      caption = docx.elements[17]
+      expect(caption.nonempty_runs.size).to eq(4)
+      # TODO: 'check after release'
+      if builder.version >= 'v8.2'
+        check_caption(caption, ['Table ', '1.1.1', '—', 'III'])
+      else
+        check_caption(caption, ['Table ', '1.1.1', '—', '3'])
+      end
+    end
+  end
 end
