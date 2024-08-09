@@ -25,3 +25,8 @@ desc 'run rspec via windows'
 task :win do
   system('rspec --tag win')
 end
+
+desc 'run immanent spec'
+task :immanent_spec do
+  system('bundle exec parallel_rspec immanent_spec')
+end
